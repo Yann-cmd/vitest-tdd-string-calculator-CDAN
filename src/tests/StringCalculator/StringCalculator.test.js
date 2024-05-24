@@ -40,15 +40,19 @@ describe('StringCalculator add method tests', () => {
         expect(() => stringCalculator.add("//;\n1;-2;-16\n1")).toThrowError('Negatives not allowed. [ -2, -16 ]')
     })
 
-    it('chemin du sang du serp', () => {
+    it('method should ignore number above 1000', () => {
         expect(stringCalculator.add("1\n2,1002")).toBe(3)
     })
 
-    it('chemin du sang du serp 2', () => {
+    it('method should compute correctly when delimiters are bewteen [ ]', () => {
         expect(stringCalculator.add("//[***]\n1***2***3")).toBe(6)
     })
 
-    it('chemin du sang du serp 2', () => {
+    it('method should compute correctly when we have several delimiters 1', () => {
         expect(stringCalculator.add("//[*][%]\n1*2%3")).toBe(6)
+    })
+
+    it('method should compute correctly when we have several delimiters 1', () => {
+        expect(stringCalculator.add("//[**][%%]\n1**2%%3")).toBe(6)
     })
 })

@@ -2,10 +2,17 @@ export class StringCalculator {
     constructor() {}
 
     getDelimiterAndCorrectText(numbers){
+        let allDelimiters = []
         let text = numbers.split('\n')
-        let delimiters = text[0].substring(2).replace('[','').replace(']','')
+        let delimiters = text[0].match(/\[([^\]]+)\]/g)
+        if(delimiters){
+            allDelimiters = delimiters.map(match => match.slice(1, -1));
+        }
+        else{
+            allDelimiters = [text[0].substring(2).replaceAll('[','').replaceAll(']','')]
+        }
         let newText = text[1]
-        return [delimiters.split(), newText]
+        return [allDelimiters, newText]
     }
 
     replace_element(numbers, delimiter){
@@ -41,8 +48,9 @@ export class StringCalculator {
         if(numbers.includes('//')){
             var [delimiters, newText] = this.getDelimiterAndCorrectText(numbers)
             delimiters.forEach(delimiter => {
-                text = this.replace_element(newText, delimiter)
+                newText = this.replace_element(newText, delimiter)
             });
+            text = newText
         }
 
         if(text.includes(',,')){
