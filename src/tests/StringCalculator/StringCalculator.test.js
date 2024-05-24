@@ -47,4 +47,8 @@ describe('StringCalculator add method tests', () => {
     it('chemin du sang du serp 2', () => {
         expect(stringCalculator.add("//[***]\n1***2***3")).toBe(6)
     })
+
+    it('chemin du sang du serp 2', () => {
+        expect(stringCalculator.add("//[*][%]\n1*2%3")).toBe(6)
+    })
 })

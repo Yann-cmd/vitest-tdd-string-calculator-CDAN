@@ -1,11 +1,11 @@
 export class StringCalculator {
     constructor() {}
 
-    addWhenSlash(numbers){
+    getDelimiterAndCorrectText(numbers){
         let text = numbers.split('\n')
-        let delimiter = text[0].substring(2).replace('[','').replace(']','')
+        let delimiters = text[0].substring(2).replace('[','').replace(']','')
         let newText = text[1]
-        return [delimiter, newText]
+        return [delimiters.split(), newText]
     }
 
     replace_element(numbers, delimiter){
@@ -18,7 +18,6 @@ export class StringCalculator {
     computeNumber(numbers){
         var value = numbers.split(',').map(number => parseInt(number)).filter(element => element < 1000)
         var negatives = value.filter((element) => element < 0)
-        value.splice()
         if(negatives.length > 0){
             throw new Error("Negatives not allowed. [ "+negatives.join(', ')+" ]")
         }
@@ -38,12 +37,12 @@ export class StringCalculator {
             return 0
         }
         this.uniqueNumberString(numbers)
+        text = this.replace_element(numbers, '\n')
         if(numbers.includes('//')){
-            var [delimiter, newText] = this.addWhenSlash(numbers)
-            text = this.replace_element(newText, delimiter)
-        }
-        else{
-            text = this.replace_element(numbers, '\n')
+            var [delimiters, newText] = this.getDelimiterAndCorrectText(numbers)
+            delimiters.forEach(delimiter => {
+                text = this.replace_element(newText, delimiter)
+            });
         }
 
         if(text.includes(',,')){
